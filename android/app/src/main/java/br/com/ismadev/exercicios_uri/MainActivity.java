@@ -1,6 +1,10 @@
 package br.com.ismadev.exercicios_uri;
 
 import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
@@ -17,7 +21,7 @@ public class MainActivity extends FlutterActivity {
                 .setMethodCallHandler(
                         (call, result) -> {
 
-                            if (call.method.equals("actionCalcularSoma")){
+                            if (call.method.equals("actionCalcularSoma")) {
                                 int valorA = call.argument("valorA");
                                 int valorB = call.argument("valorB");
 
@@ -26,7 +30,7 @@ public class MainActivity extends FlutterActivity {
                                 result.success(resultado);
                             }
 
-                            if (call.method.equals("actionCalcularTotal")){
+                            if (call.method.equals("actionCalcularTotal")) {
                                 double salario = call.argument("salario");
                                 double vendas = call.argument("vendas");
 
@@ -35,21 +39,19 @@ public class MainActivity extends FlutterActivity {
                                 result.success(resultado);
                             }
 
-                            if (call.method.equals("actionCalcularNotas")){
-                                int valor = call.argument("valor");
-                                
-                                String resultado[] = new String[7];
+                            if (call.method.equals("actionCalcularNotas")) {
+                                int nota = call.argument("valor");
 
-                                int limitador = 10;
-                                String array[] = new String[limitador];
+                                String resultado = calcularNotas(nota);
 
-                                for(int x = 0; x < limitador; x++) {
-                                    var valor
-	                                array[x] = valor;
+                                result.success(resultado);
+                            }
 
-                                }
+                            if (call.method.equals("actionVerificarNota")) {
+                                int nota = call.argument("nota");
 
-                                
+                                String resultado = verificaNota(nota);
+
                                 result.success(resultado);
                             }
 
@@ -58,17 +60,69 @@ public class MainActivity extends FlutterActivity {
                 );
     }
 
-    private int somarValores (int valorA, int valorB) {
+    private int somarValores(int valorA, int valorB) {
         return valorA + valorB;
     }
 
-    private double calcularVendas (double salario, double vendas) {
-        return salario + (vendas*0.15);
+    private double calcularVendas(double salario, double vendas) {
+        return salario + (vendas * 0.15);
     }
 
-    private String[] calcularNotas (int valor) {
+    @org.jetbrains.annotations.NotNull
+    private String calcularNotas(int nota) {
+        int notaInicial = nota;
 
+        int qtd100, qtd50, qtd20, qtd10, qtd5, qtd2, qtd1;
+        String retorno = "";
 
-        return salario + (vendas*0.15);
+        qtd100 = (nota / 100);
+        nota = nota % 100;
+        qtd50 = (nota / 50);
+        nota = nota % 50;
+        qtd20 = (nota / 20);
+        nota = nota % 20;
+        qtd10 = (nota / 10);
+        nota = nota % 10;
+        qtd5 = (nota / 5);
+        nota = nota % 5;
+        qtd2 = (nota / 2);
+        nota = nota % 2;
+        qtd1 = nota;
+
+        retorno =
+                notaInicial + "\n" +
+                        qtd100 + " nota(s) de R$ 100,00\n" +
+                        qtd50 + " nota(s) de R$ 50,00\n" +
+                        qtd20 + " nota(s) de R$ 20,00\n" +
+                        qtd10 + " nota(s) de R$ 10,00\n" +
+                        qtd5 + " nota(s) de R$ 5,00\n" +
+                        qtd2 + " nota(s) de R$ 2,00\n" +
+                        qtd1 + " nota(s) de R$ 1,00\n";
+
+        return retorno;
+    }
+
+    private String verificaNota(int nota) {
+        String retorno = "";
+        if (nota == 0){
+            retorno = "E";
+        }
+        if(nota > 0 && nota <= 35){
+            retorno = "D";
+        }
+        if(nota > 35 && nota <= 60){
+            retorno = "C";
+        }
+        if(nota > 35 && nota <= 60){
+            retorno = "C";
+        }
+        if(nota > 60 && nota <= 85){
+            retorno = "B";
+        }
+        if(nota > 85 && nota <= 100){
+            retorno = "A";
+        }
+
+        return  retorno;
     }
 }

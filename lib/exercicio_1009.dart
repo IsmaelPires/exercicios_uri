@@ -80,8 +80,17 @@ class Exercicio1009 extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          content: Text(resultado + total.toStringAsFixed(2)),
-                        );
+                            title: new Text("Resultado"),
+                            content: Text(resultado + total.toStringAsFixed(2)),
+                            actions: <Widget>[
+                              // define os botões na base do dialogo
+                              new FlatButton(
+                                child: new Text("Fechar"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ]);
                       },
                     );
                   },

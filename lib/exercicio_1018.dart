@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Exercicio1018 extends StatelessWidget {
-  static const platform = const MethodChannel("fatorial_nativo");
+  static const platform = const MethodChannel("uri_exercicios");
 
   final controllerValor = TextEditingController();
 
-  String resultado = "";
+  String resultado;
   int valor = 0;
 
   Future _actionCalcularNotas(valor) async {
-    String result = "";
+    String result;
 
     try {
       result =
           await platform.invokeMethod("actionCalcularNotas", {"valor": valor});
+      resultado = result;
       print(">> Resultado:  $result");
     } on PlatformException catch (e) {
       print(e.message);
@@ -57,6 +58,16 @@ class Exercicio1018 extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           content: Text(resultado),
+                          title: new Text("Resultado"),
+                          actions: <Widget>[
+                            // define os botões na base do dialogo
+                            new FlatButton(
+                              child: new Text("Fechar"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
                         );
                       },
                     );
