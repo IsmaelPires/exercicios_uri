@@ -10,16 +10,38 @@ class Exercicio1001 extends StatelessWidget {
   int soma = 0;
   String resultado = "X = ";
 
-  Future _actionCalcularSoma(valorA, valorB) async {
+  Future _actionCalcularSoma(valorA, valorB, context) async {
     int result = 0;
     try {
       result = await platform.invokeMethod(
           "actionCalcularSoma", {"valorA": valorA, "valorB": valorB});
       soma = result;
+      _showDialog(soma, context);
       print(">> Resultado:  $result");
     } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  _showDialog(soma, context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: new Text("Resultado"),
+          content: Text(soma.toString()),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -63,24 +85,7 @@ class Exercicio1001 extends StatelessWidget {
                   color: Colors.deepOrangeAccent,
                   onPressed: () {
                     _actionCalcularSoma(int.parse(controllerA.text),
-                        int.parse(controllerB.text));
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                            title: new Text("Resultado"),
-                            content: Text(resultado + soma.toString()),
-                            actions: <Widget>[
-                              // define os botões na base do dialogo
-                              new FlatButton(
-                                child: new Text("Fechar"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ]);
-                      },
-                    );
+                        int.parse(controllerB.text), context);
                   },
                   child: Text(
                     "Calcular",

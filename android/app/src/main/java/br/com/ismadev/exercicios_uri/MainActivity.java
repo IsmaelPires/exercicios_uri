@@ -120,7 +120,7 @@ public class MainActivity extends FlutterActivity {
         if(nota > 35 && nota <= 60){
             retorno = "C";
         }
-        if(nota > 35 && nota <= 60){
+        if (nota > 35 && nota <= 60) {
             retorno = "C";
         }
         if (nota > 60 && nota <= 85) {
@@ -128,6 +128,10 @@ public class MainActivity extends FlutterActivity {
         }
         if (nota > 85 && nota <= 100) {
             retorno = "A";
+        }
+
+        if (nota > 100) {
+            retorno = "Informe uma nota menor que 100.";
         }
 
         return retorno;

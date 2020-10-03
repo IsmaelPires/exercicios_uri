@@ -14,16 +14,38 @@ class Exercicio1009 extends StatelessWidget {
   double total = 0.00;
   String resultado = "TOTAL = R\$ ";
 
-  Future _actionCalcularTotal(nome, salario, vendas) async {
+  Future _actionCalcularTotal(nome, salario, vendas, context) async {
     double result = 0.00;
     try {
       result = await platform.invokeMethod("actionCalcularTotal",
           {"salario": double.parse(salario), "vendas": double.parse(vendas)});
       total = result;
+      _showDialog(total, context);
       print(">> Resultado:  $result");
     } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  _showDialog(total, context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: new Text("Resultado"),
+          content: Text(resultado + total.toStringAsFixed(2)),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -76,24 +98,7 @@ class Exercicio1009 extends StatelessWidget {
                   color: Colors.deepOrangeAccent,
                   onPressed: () {
                     _actionCalcularTotal(controllerNome.text,
-                        controllerSalario.text, controllerVendas.text);
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                            title: new Text("Resultado"),
-                            content: Text(resultado + total.toStringAsFixed(2)),
-                            actions: <Widget>[
-                              // define os botões na base do dialogo
-                              new FlatButton(
-                                child: new Text("Fechar"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ]);
-                      },
-                    );
+                        controllerSalario.text, controllerVendas.text, context);
                   },
                   child: Text(
                     "Calcular",

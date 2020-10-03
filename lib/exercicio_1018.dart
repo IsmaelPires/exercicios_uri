@@ -9,17 +9,39 @@ class Exercicio1018 extends StatelessWidget {
   String resultado;
   int valor = 0;
 
-  Future _actionCalcularNotas(valor) async {
+  Future _actionCalcularNotas(valor, context) async {
     String result;
 
     try {
       result =
           await platform.invokeMethod("actionCalcularNotas", {"valor": valor});
       resultado = result;
+      _showDialog(resultado, context);
       print(">> Resultado:  $result");
     } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  _showDialog(resultado, context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: new Text("Resultado"),
+          content: Text(resultado),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -53,25 +75,8 @@ class Exercicio1018 extends StatelessWidget {
                 child: RaisedButton(
                   color: Colors.deepOrangeAccent,
                   onPressed: () {
-                    _actionCalcularNotas(int.parse(controllerValor.text));
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Text(resultado),
-                          title: new Text("Resultado"),
-                          actions: <Widget>[
-                            // define os botões na base do dialogo
-                            new FlatButton(
-                              child: new Text("Fechar"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    _actionCalcularNotas(
+                        int.parse(controllerValor.text), context);
                   },
                   child: Text(
                     "Calcular",

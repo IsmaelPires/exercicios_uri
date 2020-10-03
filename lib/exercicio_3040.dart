@@ -11,17 +11,39 @@ class Exercicio3040 extends StatelessWidget {
 
   String resultado = "";
 
-  Future _actionCalcularMedidas(altura, diametro, galhos) async {
+  Future _actionCalcularMedidas(altura, diametro, galhos, context) async {
     String result = "";
 
     try {
       result = await platform.invokeMethod("actionCalcularMedidas",
           {"altura": altura, "diametro": diametro, "galhos": galhos});
       resultado = result;
+      _showDialog(resultado, context);
       print(">> Resultado:  $result");
     } on PlatformException catch (e) {
       print(e.message);
     }
+  }
+
+  _showDialog(resultado, context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: new Text("Resultado"),
+          content: Text(resultado),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -85,25 +107,8 @@ class Exercicio3040 extends StatelessWidget {
                     _actionCalcularMedidas(
                         int.parse(controllerAltura.text),
                         int.parse(controllerDiametro.text),
-                        int.parse(controllerGalhos.text));
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Text(resultado),
-                          title: new Text("Resultado"),
-                          actions: <Widget>[
-                            // define os botões na base do dialogo
-                            new FlatButton(
-                              child: new Text("Fechar"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                        int.parse(controllerGalhos.text),
+                        context);
                   },
                   child: Text(
                     "Calcular",
