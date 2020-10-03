@@ -9,11 +9,9 @@ class Exercicio3040 extends StatelessWidget {
   final controllerDiametro = TextEditingController();
   final controllerGalhos = TextEditingController();
 
-  int restante = 0;
   String resultado = "";
-  int i = 0;
 
-  Future _actionCalcularMedidas(vezes, altura, diametro, galhos) async {
+  Future _actionCalcularMedidas(altura, diametro, galhos) async {
     String result = "";
 
     try {
@@ -42,15 +40,15 @@ class Exercicio3040 extends StatelessWidget {
             children: <Widget>[
               Text(
                   "A primeira linha de entrada contém um inteiro N (0 < N ≤ 10000), o número de casos teste. As N linhas seguintes contém 3 inteiros cada, h, de g (0 < a, d, g ≤ 5000), a altura da árvore em centímetros, o seu diâmetro em centímetros, e a quantidade de galhos da árvore."),
-              TextFormField(
-                controller: controllerVezes,
-                autofocus: false,
-                keyboardType: TextInputType.number,
-                style: new TextStyle(color: Colors.black, fontSize: 20),
-                decoration: InputDecoration(
-                    labelText: "Vezes",
-                    labelStyle: TextStyle(color: Colors.black)),
-              ),
+              // TextFormField(
+              //   controller: controllerVezes,
+              //   autofocus: false,
+              //   keyboardType: TextInputType.number,
+              //   style: new TextStyle(color: Colors.black, fontSize: 20),
+              //   decoration: InputDecoration(
+              //       labelText: "Vezes",
+              //       labelStyle: TextStyle(color: Colors.black)),
+              // ),
               TextFormField(
                 controller: controllerAltura,
                 autofocus: false,
@@ -85,7 +83,6 @@ class Exercicio3040 extends StatelessWidget {
                   color: Colors.deepOrangeAccent,
                   onPressed: () {
                     _actionCalcularMedidas(
-                        int.parse(controllerVezes.text),
                         int.parse(controllerAltura.text),
                         int.parse(controllerDiametro.text),
                         int.parse(controllerGalhos.text));

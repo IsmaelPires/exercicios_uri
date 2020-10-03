@@ -134,6 +134,11 @@ public class MainActivity extends FlutterActivity {
     }
 
     private String calculaMedidas(int altura, int diametro, int galhos) {
-        return "";
+
+        if ((altura >= 200 && altura <= 300) && (diametro >= 50) && (galhos >= 150)) {
+            return "Sim";
+        } else {
+            return "Não";
+        }
     }
 }

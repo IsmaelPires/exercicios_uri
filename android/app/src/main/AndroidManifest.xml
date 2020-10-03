@@ -7,8 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="exercicios_uri"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/uri_icon"
+        android:label="Exercícios URI">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
