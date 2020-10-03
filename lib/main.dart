@@ -7,7 +7,7 @@ import 'exercicio_3040.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Navigation Basics',
+    title: 'Exercícios URI',
     debugShowCheckedModeBanner: false,
     home: FirstRoute(),
   ));
