@@ -23,6 +23,7 @@ class Exercicio2344 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Exercicio 2344"),
       ),

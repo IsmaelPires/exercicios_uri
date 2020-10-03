@@ -2,9 +2,6 @@ package br.com.ismadev.exercicios_uri;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
@@ -55,6 +52,16 @@ public class MainActivity extends FlutterActivity {
                                 result.success(resultado);
                             }
 
+                            if (call.method.equals("actionCalcularMedidas")) {
+                                int altura = call.argument("altura");
+                                int diametro = call.argument("diametro");
+                                int galhos = call.argument("galhos");
+
+                                String resultado = calculaMedidas(altura, diametro, galhos);
+
+                                result.success(resultado);
+                            }
+
                             result.notImplemented();
                         }
                 );
@@ -73,7 +80,7 @@ public class MainActivity extends FlutterActivity {
         int notaInicial = nota;
 
         int qtd100, qtd50, qtd20, qtd10, qtd5, qtd2, qtd1;
-        String retorno = "";
+        String retorno;
 
         qtd100 = (nota / 100);
         nota = nota % 100;
@@ -116,13 +123,17 @@ public class MainActivity extends FlutterActivity {
         if(nota > 35 && nota <= 60){
             retorno = "C";
         }
-        if(nota > 60 && nota <= 85){
+        if (nota > 60 && nota <= 85) {
             retorno = "B";
         }
-        if(nota > 85 && nota <= 100){
+        if (nota > 85 && nota <= 100) {
             retorno = "A";
         }
 
-        return  retorno;
+        return retorno;
+    }
+
+    private String calculaMedidas(int altura, int diametro, int galhos) {
+        return "";
     }
 }
